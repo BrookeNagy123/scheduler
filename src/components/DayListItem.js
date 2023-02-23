@@ -13,9 +13,9 @@ export default function DayListItem(props) {
     }
   }
 
-  const buttonClass = classNames("day-list__item", {"day-list__item--selected ":props.selected, "day-list__item--full":props.spots === 0});
+  const dayClass = classNames("day-list__item", {"day-list__item--selected ":props.selected, "day-list__item--full":props.spots === 0});
   return (
-    <li onClick={() => props.setDay(props.name)} className={buttonClass}>
+    <li className={dayClass} onClick={() => props.setDay(props.name)} selected={props.selected}>
       <h2>{props.name}</h2>
       {formatSpots()} 
     </li>
