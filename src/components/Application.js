@@ -23,19 +23,53 @@ export default function Application(props) {
     });
   }, []);
 
+  function bookInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview: interview})
+      .then((response) => {
+        setState({
+          ...state,
+           appointments
+        });
+      })
+  }
+
+  function cancelInterview(id, interview){
+   const appointment = {...state.appointments[id],
+      interview: {...null} }
+    const appointments = {
+      ...state.appointments,
+        [id]: appointment
+      };
+    return axios.delete(`http://localhost:8001/api/appointments/${id}`)
+      .then((response) => {
+        setState({
+          ...state,
+          appointments
+        });
+      })
+  }
+
+
   const setDay = day => setState({ ...state, day })
-
   const dailyInterviews = getInterviewersForDay(state, state.day)
-  
-
   const dailyAppointments = getAppointmentsForDay(state, state.day)
   const appointment = dailyAppointments.map(appointment =>  {
     const interview = getInterview(state, appointment.interview);
     const dailyInterviewers = getInterviewersForDay(state, state.day)
     return (
-    <Appointment key={appointment.id} {...appointment} interview={interview} interviewers={dailyInterviewers} />
+    <Appointment key={appointment.id} {...appointment} interview={interview} interviewers={dailyInterviewers} bookInterview={bookInterview} cancelInterview={cancelInterview}/>
 )
 })
+
+
   return (
     <main className="layout">
       <section className="sidebar">
