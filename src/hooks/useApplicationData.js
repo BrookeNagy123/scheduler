@@ -21,6 +21,23 @@ export default function useApplicationData(){
 
   const setDay = day => setState({ ...state, day })
 
+  function updateSpots(state, id){
+    //Find the day object
+    const currentDay = state.days.find((d) => d.appointments.includes(id) )
+    //Count all the null appointments
+    const nullAppointments = currentDay.appointments.filter((id) => !state.appointments[id].interview)
+    const spots = nullAppointments.length
+    const newDay = {...currentDay, spots}
+    const newDays = state.days.map((d) => {
+      return d.name === state.day ? newDay : d 
+    })
+    setState({
+      ...state, 
+      days: newDays
+    })
+    return newDays
+  }
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -30,28 +47,36 @@ export default function useApplicationData(){
       ...state.appointments,
       [id]: appointment
     };
+    const newState = {
+      ...state,
+      appointments 
+    }
     return axios.put(`http://localhost:8001/api/appointments/${id}`, {interview: interview})
-      .then((response) => {
-        setState({
-          ...state,
-           appointments
-        });
+      .then(() => {
+        updateSpots(newState, id)
+        // setState({
+        //   ...state,
+        //    appointments
+        // });
       })
   }
 
-  function cancelInterview(id, interview){
-    const appointment = {...state.appointments[id],
-       interview: {...null} }
+  function cancelInterview(id){
+    const appointment = {
+      ...state.appointments[id],
+       interview: null
+      }
      const appointments = {
        ...state.appointments,
          [id]: appointment
        };
+       const newState = {
+        ...state,
+        appointments 
+       }
      return axios.delete(`http://localhost:8001/api/appointments/${id}`)
-       .then((response) => {
-         setState({
-           ...state,
-           appointments
-         });
+       .then(() => {
+         updateSpots(newState, id)
        })
    }
   return {state, setDay, bookInterview, cancelInterview};
