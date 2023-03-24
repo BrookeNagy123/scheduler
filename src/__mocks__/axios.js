@@ -1,3 +1,4 @@
+//Mock data for testing 
 const fixtures = {
   days: [
     {
@@ -53,6 +54,7 @@ const fixtures = {
   }
 };
 
+//Mock axios request for GET, PUT, and DELETE
 export default {
   defaults: { baseURL: "" },
   get: jest.fn(url => {
@@ -81,18 +83,16 @@ export default {
     }
   }),
   put: jest.fn(url => {
-   
-      return Promise.resolve({
-        status: 204,
-        statusText: "No Content",
-      })
-    }),
-    delete: jest.fn(url => {
-   
-      return Promise.resolve({
-        status: 204,
-        statusText: "No Content",
-      })
-    }),
-  }
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content",
+    });
+  }),
+  delete: jest.fn(url => {
+    return Promise.resolve({
+      status: 204,
+      statusText: "No Content",
+    });
+  }),
+};
 
