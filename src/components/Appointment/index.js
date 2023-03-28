@@ -26,7 +26,7 @@ export default function Appointment(props) {
   );
 
   //Save the input from the form and book the interview
-  function save(name, interviewer) {
+  const save = (name, interviewer) => {
     const interview = {
       student: name,
       interviewer
@@ -42,7 +42,7 @@ export default function Appointment(props) {
   }
 
   //Cancel the interview
-  function cancel() {
+  const cancel = () => {
     transition(DELETING, true);
     props.cancelInterview(props.id)
       .then(() => {
@@ -57,12 +57,12 @@ export default function Appointment(props) {
     <Header time={props.time}/>
     {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
     {mode === SAVING && <Status message="Saving" />}
-    {mode === ERROR_SAVE && <Error message="Could not save appointment" onClose={() => back()} />}
+    {mode === ERROR_SAVE && <Error message="Could not save appointment" onClose={back} />}
     {mode === DELETING && <Status message="Deleting"/>}
-    {mode === ERROR_DELETE && <Error message="Could not delete appointment" onClose={() => back()}/>}
-    {mode === CREATE && (<Form interviewers={props.interviewers}  onSave={save}  onCancel={() => back()}/>)}
-    {mode === EDIT && (<Form interviewers={props.interviewers} student={props.interview.student} interviewer={props.interview.interviewer.id} onSave={save}  onCancel={() => back()}/>)}
-    {mode === CONFIRM && <Confirm  message="Delete the appointment?" onConfirm={cancel} onCancel={() => back()}/>}
+    {mode === ERROR_DELETE && <Error message="Could not delete appointment" onClose={back}/>}
+    {mode === CREATE && (<Form interviewers={props.interviewers}  onSave={save}  onCancel={back}/>)}
+    {mode === EDIT && (<Form interviewers={props.interviewers} student={props.interview.student} interviewer={props.interview.interviewer.id} onSave={save}  onCancel={back}/>)}
+    {mode === CONFIRM && <Confirm  message="Delete the appointment?" onConfirm={cancel} onCancel={back}/>}
     {mode === SHOW && (
       <Show
         student={props.interview.student}
