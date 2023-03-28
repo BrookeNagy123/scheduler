@@ -15,7 +15,7 @@ export default function InterviewerList(props) {
   </section>;
 }
 
-//Check on the Props Type. For Interviewers an array is required. 
+//Check on the Props Type. For Interviewers an array is required.
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired
 };
