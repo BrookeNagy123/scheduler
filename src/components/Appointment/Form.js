@@ -19,8 +19,8 @@ export default function Form(props) {
     props.onCancel();
   };
 
-  //Validate the form input is not blank for the student or interviewer when submitted 
-  function validate() {
+  //Validate the form input is not blank for the student or interviewer when submitted
+  const validate = () => {
     if (student === "") {
       setError("Student name cannot be blank");
       return;
@@ -31,7 +31,7 @@ export default function Form(props) {
     }
     setError("");
     props.onSave(student, interviewer);
-  }
+  };
 
   return <main className="appointment__card appointment__card--create">
     <section className="appointment__card-left">
