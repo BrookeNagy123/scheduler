@@ -1,5 +1,5 @@
-//This function will return an array of appointments for a given day. 
-export function getAppointmentsForDay(state, day) {
+//This function will return an array of appointments for a given day.
+export const getAppointmentsForDay = (state, day) => {
   const result = [];
   const arr = state.days;
   const selectedDay = arr ? arr.filter(d => d.name === day)[0] : [];
@@ -13,10 +13,10 @@ export function getAppointmentsForDay(state, day) {
     }
   }
   return result;
-}
+};
 
 //This function will return an object that contains the interview data if it is passed an object that contains an interviewer.
-export function getInterview(state, interview) {
+export const getInterview = (state, interview) => {
   if (!interview) {
     return null;
   }
@@ -29,10 +29,10 @@ export function getInterview(state, interview) {
       return results;
     }
   }
-}
+};
 
-//This function will return an array of interviewers for a given day. 
-export function getInterviewersForDay(state, day) {
+//This function will return an array of interviewers for a given day.
+export const getInterviewersForDay = (state, day) => {
   const result = [];
   const arr = state.days;
   const selectedDay = arr ? arr.filter(d => d.name === day)[0] : [];
@@ -46,5 +46,5 @@ export function getInterviewersForDay(state, day) {
     }
   }
   return result;
-}
+};
 
