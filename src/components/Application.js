@@ -5,7 +5,7 @@ import Appointment from "./Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 
-//Using custom hook of useApplicationData to update and manage the state of the application. 
+//Using custom hook of useApplicationData to update and manage the state of the application.
 export default function Application(props) {
   const {
     state,
@@ -15,9 +15,9 @@ export default function Application(props) {
   } = useApplicationData();
 
 
-  //Using helper functions to organize data for the Appointment component 
-    const dailyAppointments = getAppointmentsForDay(state, state.day);
-    const appointment = dailyAppointments.map(appointment =>  {
+  //Using helper functions to organize data for the Appointment component
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
+  const appointment = dailyAppointments.map(appointment =>  {
     const interview = getInterview(state, appointment.interview);
     const dailyInterviewers = getInterviewersForDay(state, state.day);
     return (
