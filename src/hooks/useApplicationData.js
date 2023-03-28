@@ -10,7 +10,7 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
-  //Axios request to get the data for days, appointments, and interviewers and use that data to set the state. 
+  //Axios request to get the data for days, appointments, and interviewers and use that data to set the state.
   useEffect(() => {
     Promise.all([
       axios.get(`/api/days`),
@@ -21,29 +21,29 @@ export default function useApplicationData() {
     });
   }, []);
 
-  //Set the day in the state 
+  //Set the day in the state
   const setDay = day => setState({ ...state, day });
 
-  //Update the number of spots for the day 
-  function updateSpots(state, id) {
+  //Update the number of spots for the day
+  const updateSpots = (newState, id) => {
     //Find the day object
-    const currentDay = state.days.find((d) => d.appointments.includes(id));
+    const currentDay = newState.days.find((d) => d.appointments.includes(id));
     //Count all the null appointments
-    const nullAppointments = currentDay.appointments.filter((id) => !state.appointments[id].interview);
+    const nullAppointments = currentDay.appointments.filter((id) => !newState.appointments[id].interview);
     const spots = nullAppointments.length;
     const newDay = {...currentDay, spots};
-    const newDays = state.days.map((d) => {
-      return d.name === state.day ? newDay : d;
+    const newDays = newState.days.map((d) => {
+      return d.name === newState.day ? newDay : d;
     });
     setState({
-      ...state,
+      ...newState,
       days: newDays
     });
     return newDays;
-  }
+  };
 
-  //Book an interview. Update the state and make a put request. 
-  function bookInterview(id, interview) {
+  //Book an interview. Update the state and make a put request.
+  const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -60,10 +60,10 @@ export default function useApplicationData() {
       .then(() => {
         updateSpots(newState, id);
       });
-  }
+  };
 
-  //Cancel an interview. Update the state and make a delete request. 
-  function cancelInterview(id) {
+  //Cancel an interview. Update the state and make a delete request.
+  const cancelInterview = (id) => {
     const appointment = {
       ...state.appointments[id],
       interview: null
